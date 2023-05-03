@@ -1,3 +1,38 @@
+.navbar {
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    61deg,
+    rgba(255, 255, 255, 1) 85%,
+    rgba(238, 238, 249, 1) 85%,
+    rgba(14, 98, 157, 1) 85%
+  );
+}
+.top-nav {
+  background: rgb(14, 98, 157);
+  background: linear-gradient(
+    114deg,
+    rgba(14, 98, 157, 1) 50%,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(255, 255, 255, 1) 51%
+  );
+}
+.font-karla {
+  font-family: "Karla", sans-serif;
+}
+.marginauto {
+  margin-left: auto;
+}
+@media only screen and (max-width: 845px) {
+  .navbar-hidden {
+    display: none;
+  }
+}
+@media only screen and (min-width: 846px) {
+  .hamburger {
+    display: none;
+  }
+}
+
 .App {
   text-align: center;
 }
