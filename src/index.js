@@ -16,7 +16,7 @@ import MediaSlug from "./Component/MediaSlug";
 import GallerySlug from "./Component/GallerySlug";
 import ClubInformation from "./Component/ClubInformation";
 import Login from "./Component/Login";
-import DirectoryInformation from "./DirectoryInformation";
+import DirectoryInformation from "./Component/DirectoryInformation";
 
 const router = createBrowserRouter([
   {

@@ -12,7 +12,7 @@ const ContactForm = () => {
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
-    email: Yup.string().email("Invalid email").required("Email is required"),
+    email: Yup.string().trim().email("Invalid email").max(254, "xyz", {count: 254}).matches(/^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/).required("Email is required"),
     number: Yup.string()
       .matches(/^[0-9]{10}$/, "Phone number must be 10 digits")
       .required(),

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate} from "react-router-dom";
+import { BsFillArrowLeftSquareFill } from "react-icons/bs";
 
 const Directory = () => {
   const [directoryList, setDirectoryList] = useState();
-  console.log("vvvv", Cookies.get("authentication_code"));
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     getClubList();
@@ -29,6 +31,14 @@ const Directory = () => {
 
   return (
     <>
+    <div className="mt-2 mr-2 flex justify-end">
+    <button className="mt-2  ml-0   px-8 py-3 bg-[#6153fc] text-[#f8f8f8] rounded flex items-center font-[600] md:ml-2 md:mt-0   lg:ml-5" onClick={()=>{navigate('/')}}>
+      <span className="mr-2 text-lg ">
+        <BsFillArrowLeftSquareFill />
+      </span>
+      Back
+    </button>
+    </div>
       <div className="flex flex-wrap">
         <div className="w-full sm:w-1/2 px-4 mb-4">
           <div class="p-2 ">

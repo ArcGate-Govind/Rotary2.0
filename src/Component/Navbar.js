@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { FaFacebookF, FaInstagram } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { NavbarList } from "./Utils/Constant";
 import { GoGrabber } from "react-icons/go";
-import { AiOutlineClose } from "react-icons/ai";
 
-const Navbar = () => {
-  const [mobileNav,setMobileNav]=useState(false)
-  const openMobileNav = ()=>{
-    setMobileNav(true)
+
+const Navbar = ({setLocationShow}) => {
+  const openModle =()=>{
+    setLocationShow(true)
   }
+  
   return (
     <>
       <div className="w-full h-20 mb-12">
@@ -55,7 +55,7 @@ const Navbar = () => {
             </ul>
           </div>
           <div className="w-1/5 flex justify-end mt-2 m-4 marginauto">
-          <GoGrabber className="hamburger w-8 h-8 text-white mt-3 mr-2" onClick={openMobileNav}/>
+          <GoGrabber className="hamburger w-8 h-8 text-white mt-3 mr-2" onClick={openModle}/>
             <Link to={"/login/"}><button className=" bg-white px-4 py-0 mt-2 mb-2 ml-0 mr-0 rounded font-karla h-10">
             Login
           </button></Link>

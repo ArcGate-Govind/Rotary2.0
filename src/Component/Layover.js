@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Layover = () => {
+const Layover = ({setLocationShow}) => {
   return (
      <>
     

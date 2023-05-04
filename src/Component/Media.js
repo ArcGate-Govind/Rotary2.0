@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { BsFillArrowLeftSquareFill } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Media() {
   const [mediaList, setMediaList] = useState();
+  const navigate = useNavigate();
   console.log("mediaList", mediaList);
 
   useEffect(() => {
@@ -22,12 +23,14 @@ function Media() {
   }
   if (!mediaList) return null;
 
+
+
   return mediaList.length === 0 ? (
     <p>gfdgdfbgf00</p>
   ) : (
     <>
       <div className="mt-2 mr-2 flex justify-end">
-        <button className="mt-2  ml-0   px-8 py-3 bg-[#6153fc] text-[#f8f8f8] rounded flex items-center font-[600] md:ml-2 md:mt-0   lg:ml-5">
+        <button className="mt-2  ml-0   px-8 py-3 bg-[#6153fc] text-[#f8f8f8] rounded flex items-center font-[600] md:ml-2 md:mt-0   lg:ml-5" onClick={()=>{navigate('/')}}>
           <span className="mr-2 text-lg ">
             <BsFillArrowLeftSquareFill />
           </span>

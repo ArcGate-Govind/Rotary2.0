@@ -1,15 +1,15 @@
-import React,{useState} from 'react'
+import React from 'react'
 import Navbar from './Navbar'
-import Login from '../Component/Login'
 
-function Header() {
-  const [LoginShow,setLoginshow] = useState(false)
+
+function Header({setLocationShow}) {
+ 
 
   
   return (
     <>
-  <Navbar setLoginshow={setLoginshow} LoginShow={LoginShow}/>
-  {LoginShow && <Login setLocationShow={setLoginshow} />}
+  <Navbar setLocationShow={setLocationShow}/>
+  
 
     </>
   )

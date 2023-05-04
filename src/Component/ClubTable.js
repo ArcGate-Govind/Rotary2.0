@@ -1,24 +1,54 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { BsFillArrowLeftSquareFill } from "react-icons/bs";
+import AppContext from "../Context/Context";
 
 const ClubTable = () => {
   const [clubList, setClubList] = useState([]);
+  const navigate = useNavigate();
+  const { state, setState } = useContext(AppContext);
 
   useEffect(() => {
     getClubList();
   }, []);
   async function getClubList() {
-    const page = 1;
     const data = await fetch(
-      `https://arcappproject.pythonanywhere.com/club/list?page=${page}`
+      `https://arcappproject.pythonanywhere.com/club/list?page=${1}`
     );
     const json = await data?.json();
+    setState({ metadata: json.meta_data });
     setClubList(json);
-    console.log("json", json);
+  }
+
+  async function handleChangePage(e, value) {
+    const data = await fetch(
+      `https://arcappproject.pythonanywhere.com/club/list?page=${
+        value == "next"
+          ? state?.metadata?.currentPage + 1
+          : state?.metadata?.currentPage - 1
+      }`
+    );
+    const json = await data?.json();
+    setState({ metadata: json.meta_data })
+    setClubList(json);
   }
 
   return (
     <>
+      <div className="mt-2 mr-2 flex justify-end">
+        <button
+          className="mt-2  ml-0   px-8 py-3 bg-[#6153fc] text-[#f8f8f8] rounded flex items-center font-[600] md:ml-2 md:mt-0   lg:ml-5"
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          <span className="mr-2 text-lg ">
+            <BsFillArrowLeftSquareFill />
+          </span>
+          Back
+        </button>
+      </div>
+
       <div className="flex flex-wrap">
         <div className="w-full sm:w-1/2 px-4 mb-4">
           <div className="p-2 ">
@@ -36,24 +66,11 @@ const ClubTable = () => {
                 placeholder="Search By Name"
               />
             </div>
-            <div className="w-full md:w-1/4 px-2 pt-10">
-              <input
-                type="text"
-                className="w-full  border-gray-300 border p-1 outline-none"
-                placeholder="Search By Club "
-              />
-            </div>
-            <div className="w-full md:w-1/4 px-2 pt-10">
-              <input
-                type="text"
-                className="w-full  border-gray-300 border p-1 outline-none"
-                placeholder="Search By City"
-              />
-            </div>
           </div>
         </div>
       </div>
-      <div classNameNane="flex flex-col">
+
+      <div className="flex flex-col">
         <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
             <div className="overflow-hidden">
@@ -80,11 +97,13 @@ const ClubTable = () => {
                 <tbody>
                   {clubList?.result?.map((item) => {
                     return (
-                      <tr  className="border-b transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-neutral-600">
+                      <tr className="border-b transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-neutral-600">
                         <td className="whitespace-nowrap px-6 py-4 font-medium">
-                          <Link to={"/clubinfo/" + item.id} key={item.id} ><p className="text-[#6153fc] text-xl font-[600] cursor-pointer">
-                          {item?.name}
-                        </p></Link>
+                          <Link to={"/clubinfo/" + item.id} key={item.id}>
+                            <p className="text-[#6153fc] text-xl font-[600] cursor-pointer">
+                              {item?.name}
+                            </p>
+                          </Link>
                           <p className="text-l opacity-80">
                             Club id: {item?.rotary_club_id} ({item?.club_type})
                           </p>
@@ -116,10 +135,19 @@ const ClubTable = () => {
       </div>
       <div className="flex flex-col items-center pb-4">
         <div className="inline-flex mt-2 xs:mt-0">
-          <button className="px-4 py-2 text-sm font-medium text-white bg-[rgb(97,83,252)] rounded-l hover:bg-[rgb(97,83,252)] dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+          <button
+            disabled={state?.metadata?.currentPage == 1 && true}
+            className="px-4 py-2 text-sm font-medium text-white bg-[rgb(97,83,252)] rounded-l hover:bg-[rgb(97,83,252)] dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+            onClick={(e) => handleChangePage(e, "prev")}
+          >
             Prev
           </button>
-          <button className="px-4 py-2 text-sm font-medium text-white bg-[rgb(97,83,252)] border-0 border-l border-gray-700 rounded-r hover:bg-[rgb(97,83,252)] dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+         <span className="flex justify-center items-center text-white bg-[rgb(97,83,252)] w-5 rounded-full h-5 m-2 ">{state?.metadata?.currentPage}</span>
+          <button
+          disabled={state?.metadata?.currentPage == state.metadata.pageCount && true}
+            className="px-4 py-2 text-sm font-medium text-white bg-[rgb(97,83,252)] border-0 border-l border-gray-700 rounded-r hover:bg-[rgb(97,83,252)] dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+            onClick={(e) => handleChangePage(e, "next")}
+          >
             Next
           </button>
         </div>
